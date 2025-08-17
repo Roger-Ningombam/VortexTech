@@ -80,11 +80,20 @@ const Services = () => {
   }
 
   const navigate = (index) => {
-    setDirection(index > currentIndex ? 1 : -1);
-    
-    // This is the fix: it wraps the index around
+    const oldIndex = currentIndex;
     const newIndex = (index + servicesData.length) % servicesData.length;
     
+    // More explicit direction calculation
+    let dir = 0;
+    if (newIndex !== oldIndex) {
+        if (newIndex > oldIndex) {
+            dir = (newIndex - oldIndex) <= servicesData.length / 2 ? 1 : -1;
+        } else {
+            dir = (oldIndex - newIndex) <= servicesData.length / 2 ? -1 : 1;
+        }
+    }
+    
+    setDirection(dir);
     setCurrentIndex(newIndex);
 };
   const cardVariants = {
@@ -95,17 +104,26 @@ const Services = () => {
       rotateY: custom.position * 15,
       opacity: custom.isCenter ? 1 : 0.6,
       y: custom.isCenter ? -20 : 0,
-      zIndex: 5 - Math.abs(custom.position), // This is fine for visible cards
+      zIndex: 5 - Math.abs(custom.position),
       transition: { type: "spring", stiffness: 400, damping: 50 }
   }),
-  // This is where the card goes when it leaves the screen
-  exit: (custom) => ({
-      x: custom.direction > 0 ? -500 : 500, // Moves off-screen
+  // Updated exit animation for better mobile handling
+  exit: (custom) => {
+    const isMobile = window.innerWidth < 768;
+    const exitDistance = isMobile ? window.innerWidth + 100 : 500;
+    
+    return {
+      x: custom.direction > 0 ? -exitDistance : exitDistance,
       opacity: 0,
-      scale: 0.8,
-      zIndex: 10, // <--- THIS IS THE FIX. Add this line.
-      transition: { duration: 0.2 }
-  })
+      scale: 0.6, // Smaller scale for mobile
+      rotateY: custom.direction > 0 ? -45 : 45, // Add rotation for smoother exit
+      zIndex: 10,
+      transition: { 
+        duration: isMobile ? 0.3 : 0.2,
+        ease: "easeInOut" // Smoother easing
+      }
+    }
+  }
 };
   return (
     <section 
