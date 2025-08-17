@@ -83,7 +83,7 @@ const Hero = () => {
           ref={vortexRef}
           src="Votex_model.png"
           alt="Vortex Model"
-          className="w-[700px] h-[700px] md:w-[900px] md:h-[900px] md:w-[1200px] md:h-[1200px] object-contain opacity-75"
+          className="w-[900px] h-[900px] md:w-[1200px] md:h-[1200px] md:w-[1600px] md:h-[1600px] object-contain opacity-75"
           style={{
             filter: 'contrast(1.5) brightness(3) sharpness(1.5)',
             transformOrigin: 'center center',
@@ -103,7 +103,7 @@ const Hero = () => {
           className="relative"
         >
           {/* Main Headlines - Centered at top */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-1">
             <motion.h1
               variants={textVariants}
               className="hero-title text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4"
@@ -137,7 +137,7 @@ const Hero = () => {
               className="w-1/3 pr-8 z-20 relative"
             >
               <div className="relative p-6 bg-gradient-to-r from-blue-600/20 to-transparent border-l-4 border-blue-500 backdrop-blur-sm rounded-r-lg">
-                <p className="text-sm md:text-2xl text-white leading-relaxed text-left font-medium">
+                <p className="text-xs md:text-2xl text-white leading-relaxed text-left font-medium">
                   Redefining possibilities with <span className="text-blue-400 font-bold">cutting-edge AI</span>, immersive experiences, and scalable software solutions.
                 </p>
                 <div className="absolute inset-0 bg-blue-500/10 rounded-r-lg animate-pulse"></div>
@@ -158,7 +158,7 @@ const Hero = () => {
               className="w-1/3 pl-8 z-20 relative"
             >
               <div className="relative p-6 bg-gradient-to-l from-red-600/20 to-transparent border-r-4 border-red-500 backdrop-blur-sm rounded-l-lg">
-                <p className="text-sm md:text-2xl text-white leading-relaxed text-right font-medium break-words hyphens-auto">
+                <p className="text-xs md:text-2xl text-white leading-relaxed text-right font-medium break-words hyphens-auto">
                   This is where <span className="text-red-400 font-bold">groundbreaking ideas</span> meet flawless execution for transformative, real-world results.
                 </p>
                 <div className="absolute inset-0 bg-red-500/10 rounded-l-lg animate-pulse"></div>
