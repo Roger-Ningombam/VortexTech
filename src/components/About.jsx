@@ -103,7 +103,7 @@ const About = () => {
             {/* Photo Container */}
             <div className="glass-morphism rounded-2xl p-4 overflow-hidden">
               <img 
-                src="/vortex-img.png" 
+                src="vortex-img.png" 
                 alt="VortexTech Team or Office" 
                 className="w-full h-64 object-cover rounded-lg"
                 placeholder="Add your photo here - could be team photo, office space, or technology showcase"

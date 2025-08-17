@@ -81,7 +81,7 @@ const Hero = () => {
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
         <img
           ref={vortexRef}
-          src="/Votex_model.png"
+          src="Votex_model.png"
           alt="Vortex Model"
           className="w-[700px] h-[700px] md:w-[900px] md:h-[900px] md:w-[1200px] md:h-[1200px] object-contain opacity-75"
           style={{
