@@ -167,24 +167,24 @@ const Hero = () => {
           </div>
 
           {/* CTA Button - Centered below - Moved up */}
-          <motion.div
-            variants={textVariants}
-            className="text-center mt-1 z-30 relative"
-          >
-            <CTAButton 
-              text="DISCOVER OUR SERVICES"
-              onClick={() => {
-                const servicesSection = document.querySelector('#services')
-                if (servicesSection) {
-                  servicesSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                  })
-                }
-              }}
-              className="px-8 py-4 text-lg"
-            />
-          </motion.div>
+          <div className="relative w-full flex justify-center">
+            <motion.div
+              variants={textVariants}
+              className="absolute bottom-[1px] z-30"
+            >
+              <CTAButton
+                text="DISCOVER OUR SERVICES"
+                onClick={() => {
+                  const servicesSection = document.querySelector('#services')
+                  if (servicesSection) {
+                    servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }
+                }}
+                className="px-8 py-4 text-lg"
+              />
+            </motion.div>
+          </div>
+
         </motion.div>
       </div>
 
