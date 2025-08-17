@@ -158,7 +158,7 @@ const Hero = () => {
               className="w-1/3 pl-8 z-20 relative"
             >
               <div className="relative p-6 bg-gradient-to-l from-red-600/20 to-transparent border-r-4 border-red-500 backdrop-blur-sm rounded-l-lg">
-                <p className="text-xs md:text-2xl text-white leading-relaxed text-right font-medium break-words hyphens-auto">
+                <p className="text-2xs md:text-2xl text-white leading-relaxed text-right font-medium break-words hyphens-auto">
                   This is where <span className="text-red-400 font-bold">groundbreaking ideas</span> meet flawless execution for transformative, real-world results.
                 </p>
                 <div className="absolute inset-0 bg-red-500/10 rounded-l-lg animate-pulse"></div>
