@@ -15,8 +15,6 @@ const Services = () => {
   const carouselRef = useRef()
   const [direction, setDirection] = useState(0);
 
-
-
   // GSAP scroll animations
   useEffect(() => {
     const updateSpacing = () => {
@@ -80,51 +78,59 @@ const Services = () => {
   }
 
   const navigate = (index) => {
-    const oldIndex = currentIndex;
+    setDirection(index > currentIndex ? 1 : -1);
+    
+    // This is the fix: it wraps the index around
     const newIndex = (index + servicesData.length) % servicesData.length;
     
-    // More explicit direction calculation
-    let dir = 0;
-    if (newIndex !== oldIndex) {
-        if (newIndex > oldIndex) {
-            dir = (newIndex - oldIndex) <= servicesData.length / 2 ? 1 : -1;
-        } else {
-            dir = (oldIndex - newIndex) <= servicesData.length / 2 ? -1 : 1;
-        }
-    }
-    
-    setDirection(dir);
     setCurrentIndex(newIndex);
-};
+  };
+
+  // Fixed cardVariants with proper mobile exit handling
   const cardVariants = {
-  // This defines the card's position when it's visible on screen
-  animate: (custom) => ({
-      x: custom.position * cardSpacing,
-      scale: custom.isCenter ? 1.1 : 0.8,
-      rotateY: custom.position * 15,
-      opacity: custom.isCenter ? 1 : 0.6,
-      y: custom.isCenter ? -20 : 0,
-      zIndex: 5 - Math.abs(custom.position),
-      transition: { type: "spring", stiffness: 400, damping: 50 }
-  }),
-  // Updated exit animation for better mobile handling
-  exit: (custom) => {
-    const isMobile = window.innerWidth < 768;
-    const exitDistance = isMobile ? window.innerWidth + 100 : 500;
-    
-    return {
-      x: custom.direction > 0 ? -exitDistance : exitDistance,
-      opacity: 0,
-      scale: 0.6, // Smaller scale for mobile
-      rotateY: custom.direction > 0 ? -45 : 45, // Add rotation for smoother exit
-      zIndex: 10,
-      transition: { 
-        duration: isMobile ? 0.3 : 0.2,
-        ease: "easeInOut" // Smoother easing
+    // This defines the card's position when it's visible on screen
+    animate: (custom) => ({
+        x: custom.position * cardSpacing,
+        scale: custom.isCenter ? 1.1 : 0.8,
+        rotateY: custom.position * 15,
+        opacity: custom.isCenter ? 1 : 0.6,
+        y: custom.isCenter ? -20 : 0,
+        zIndex: 5 - Math.abs(custom.position),
+        transition: { type: "spring", stiffness: 400, damping: 50 }
+    }),
+    // Fixed exit animation - force cards completely off screen
+    exit: (custom) => {
+      const isMobile = window.innerWidth < 768;
+      // Use much larger exit distances to ensure complete removal
+      const exitDistance = isMobile ? window.innerWidth * 1.5 : 800;
+      
+      return {
+        x: custom.direction > 0 ? -exitDistance : exitDistance,
+        opacity: 0,
+        scale: 0.3, // Much smaller scale
+        rotateY: 0, // Remove rotation to avoid positioning issues
+        y: 0, // Reset y position
+        zIndex: -1, // Send behind everything
+        transition: { 
+          duration: 0.4,
+          ease: "easeOut",
+        }
       }
     }
-  }
-};
+  };
+
+  // Carousel container style for proper overflow handling
+  const carouselContainerStyle = {
+    position: 'relative',
+    height: window.innerWidth < 768 ? '320px' : '500px',
+    width: '100%',
+    overflow: 'hidden', // Critical: hide any overflow
+    // Add these for extra insurance on mobile
+    ...(window.innerWidth < 768 && {
+      clipPath: 'inset(0)',
+    })
+  };
+
   return (
     <section 
       id="services" 
@@ -153,7 +159,8 @@ const Services = () => {
         <div 
           ref={carouselRef}
           {...swipeHandlers}
-          className="carousel-container relative h-80 md:h-[500px] perspective-1000"
+          className="carousel-container perspective-1000"
+          style={carouselContainerStyle}
         >
           <div className="relative w-full h-full flex items-center justify-center">
             <AnimatePresence>
@@ -174,6 +181,7 @@ const Services = () => {
                           direction 
                       }}
                       variants={cardVariants}
+                      initial="animate"
                       animate="animate"
                       exit="exit"
                       onClick={() => navigate(index)}
